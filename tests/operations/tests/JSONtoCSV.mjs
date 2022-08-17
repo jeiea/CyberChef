@@ -166,5 +166,27 @@ TestRegister.addTests([
                 args: [",", "\\r\\n"]
             },
         ],
+    },
+    {
+        name: "JSON to CSV: array, object, object, field",
+        input: JSON.stringify([{a: 3, b: {c: 4}}]),
+        expectedOutput: "a,b.c\r\n3,4\r\n",
+        recipeConfig: [
+            {
+                op: "JSON to CSV",
+                args: [",", "\\r\\n"]
+            },
+        ],
+    },
+    {
+        name: "JSON to CSV: array, object, object, field",
+        input: JSON.stringify([{a: {b: 4}}, {c: {d: 3}}]),
+        expectedOutput: "a.b,c.d\r\n4,\r\n,3\r\n",
+        recipeConfig: [
+            {
+                op: "JSON to CSV",
+                args: [",", "\\r\\n"]
+            },
+        ],
     }
 ]);

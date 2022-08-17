@@ -60,7 +60,7 @@ class JSONToCSV extends Operation {
         }
 
         // If it's an array of dictionaries...
-        const header = Object.keys(this.flattened[0]);
+        const header = [...new Set(this.flattened.flatMap(x => Object.keys(x)))];
         return header
             .map(d => self.escapeCellContents(d, force))
             .join(this.cellDelim) +
@@ -95,7 +95,7 @@ class JSONToCSV extends Operation {
             return this.toCSV();
         } catch (err) {
             try {
-                this.flattened = flatten(input);
+                this.flattened = this.flattened.map(x => flatten(x));
                 if (!(this.flattened instanceof Array)) {
                     this.flattened = [this.flattened];
                 }
@@ -116,7 +116,8 @@ class JSONToCSV extends Operation {
     escapeCellContents(data, force=false) {
         if (data !== "string") {
             const isPrimitive = data == null || typeof data !== "object";
-            if (isPrimitive) data = `${data}`;
+            if (data === undefined) data = "";
+            else if (isPrimitive) data = `${data}`;
             else if (force) data = JSON.stringify(data);
         }
 
