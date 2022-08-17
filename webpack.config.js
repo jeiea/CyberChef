@@ -196,9 +196,6 @@ module.exports = {
                 test: /\.(png|jpg|gif)$/,
                 exclude: /(node_modules|bmfonts)/,
                 type: "asset/resource",
-                generator: {
-                    filename: "images/[name][ext]"
-                }
             },
             { // Third party images are inlined
                 test: /\.(png|jpg|gif)$/,
